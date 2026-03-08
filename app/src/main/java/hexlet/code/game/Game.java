@@ -10,7 +10,7 @@ public abstract class Game {
     private static final int GAMES_COUNT = 3;
     private static final RandomGenerator RANDOM = RandomGenerator.getDefault();
 
-    protected final String rule;
+    private final String rule;
 
     public Game(String gameRule) {
         this.rule = gameRule;
