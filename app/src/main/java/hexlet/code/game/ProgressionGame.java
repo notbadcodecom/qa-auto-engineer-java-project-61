@@ -1,0 +1,37 @@
+package hexlet.code.game;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+public final class ProgressionGame extends Game {
+
+    private static final String RULE = "What number is missing in the progression?";
+
+    private static final int FIRST_ELEMENT_BOUND = 50;
+    private static final int DIFFERENCE_BOUND = 9;
+    private static final int SEQUENCE_MAX_BOUND = 10;
+    private static final int SEQUENCE_MIN_BOUND = 5;
+    private static final int MIN_INDEX_VALUE = 0;
+
+    public ProgressionGame() {
+        super(RULE);
+    }
+
+    @Override
+    public GameDataNode generateGameDataNode() {
+        int firstElement = getRandom(LOWER_BOUND, FIRST_ELEMENT_BOUND);
+        int difference = getRandom(LOWER_BOUND, DIFFERENCE_BOUND);
+        int numberOfTerms = getRandom(SEQUENCE_MIN_BOUND, SEQUENCE_MAX_BOUND);
+        List<Integer> sequence = IntStream.iterate(firstElement, elem -> elem + difference)
+                .limit(numberOfTerms)
+                .boxed()
+                .toList();
+        int answerIndex = getRandom(MIN_INDEX_VALUE, numberOfTerms);
+        Integer answer = sequence.get(answerIndex);
+        String question = IntStream.range(MIN_INDEX_VALUE, sequence.size())
+                .mapToObj(index -> index == answerIndex ? ".." : sequence.get(index).toString())
+                .collect(Collectors.joining(" "));
+        return new GameDataNode(question, answer.toString());
+    }
+}
