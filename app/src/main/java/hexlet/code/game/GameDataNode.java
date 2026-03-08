@@ -1,13 +1,14 @@
 package hexlet.code.game;
 
-public class GameDataNode {
+public final class GameDataNode {
     private final String question;
     private final String answer;
     private GameDataNode next;
 
-    public GameDataNode(String question, String answer) {
-        this.question = question;
-        this.answer = answer;
+    public GameDataNode(String questionValue, String answerValue) {
+        this.question = questionValue;
+        this.answer = answerValue;
+        this.next = null;
     }
 
     public String getQuestion() {

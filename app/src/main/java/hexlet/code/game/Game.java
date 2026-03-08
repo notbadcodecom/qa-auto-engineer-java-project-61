@@ -12,17 +12,17 @@ public abstract class Game {
 
     protected final String rule;
 
-    public Game(String rule) {
-        this.rule = rule;
+    public Game(String gameRule) {
+        this.rule = gameRule;
     }
 
     public abstract GameDataNode generateGameDataNode();
 
-    public String getRule() {
+    public final String getRule() {
         return rule;
     }
 
-    public GameDataNode getGameDataLinkedList() {
+    public final GameDataNode getGameDataLinkedList() {
         GameDataNode head = generateGameDataNode();
         GameDataNode current = head;
         for (int i = 1; i < GAMES_COUNT && current != null; i++) {

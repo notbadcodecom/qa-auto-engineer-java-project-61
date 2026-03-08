@@ -4,7 +4,7 @@ import hexlet.code.game.GameDataNode;
 
 import java.util.Scanner;
 
-public class EngineService {
+public final class EngineService {
 
     private static final String WELCOME_MESSAGE = "Welcome to the Brain Games!";
     private static final String ASK_NAME_MESSAGE = "May I have your name? ";
