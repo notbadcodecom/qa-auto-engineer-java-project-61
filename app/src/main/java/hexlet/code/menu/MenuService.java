@@ -9,7 +9,7 @@ import hexlet.code.game.PrimeGame;
 import hexlet.code.game.ProgressionGame;
 import hexlet.code.engine.EngineService;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -19,7 +19,7 @@ public final class MenuService {
     private static final String USER_CHOICE = "Your choice: ";
     private static final String MENU_ITEM_TEXT_PATTERN = "%d - %s%n";
 
-    private final Map<MenuItem, Game> games = new HashMap<>();
+    private final Map<MenuItem, Game> games = new EnumMap<>(MenuItem.class);
     private final EngineService engine = new EngineService();
     private final Scanner scanner = new Scanner(System.in);
 

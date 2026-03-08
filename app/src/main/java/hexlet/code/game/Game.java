@@ -12,7 +12,7 @@ public abstract class Game {
 
     private final String rule;
 
-    public Game(String gameRule) {
+    protected Game(String gameRule) {
         this.rule = gameRule;
     }
 
