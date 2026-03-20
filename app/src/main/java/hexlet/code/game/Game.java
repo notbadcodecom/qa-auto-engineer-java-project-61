@@ -21,7 +21,7 @@ public abstract class Game {
         return rule;
     }
 
-    public String[][] generateMultipleGameData() {
+    public final String[][] generateMultipleGameData() {
         return IntStream.range(0, GAMES_COUNT)
                 .mapToObj(i -> generateSingleGameData())
                 .toArray(String[][]::new);
