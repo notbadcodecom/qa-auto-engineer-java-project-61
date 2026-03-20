@@ -31,7 +31,7 @@ public class App {
             Game game = createGame(userChoice);
             new Engine().runGame(game);
         } catch (IllegalArgumentException e) {
-            writeMessage(e.getMessage());
+            System.out.printf(e.getMessage());
         }
         scanner.close();
     }
@@ -49,26 +49,18 @@ public class App {
     }
 
     private static void displayMenu() {
-        writeMessage(INTRO_MESSAGE);
+        System.out.printf(INTRO_MESSAGE);
         for (MenuItem menuItem : MenuItem.values()) {
-            writeMessage(MENU_ITEM_TEXT_PATTERN, menuItem.getOrder(), menuItem.getText());
+            System.out.printf(MENU_ITEM_TEXT_PATTERN, menuItem.getOrder(), menuItem.getText());
         }
     }
 
     private static MenuItem readChoice() {
-        writeMessage(USER_CHOICE);
+        System.out.printf(USER_CHOICE);
         try {
             return MenuItem.fromOrderValue(Integer.parseInt(scanner.nextLine().trim()));
         } catch (RuntimeException e) {
             return MenuItem.EXIT;
         }
-    }
-
-    /*
-        Обертку оставил, так как Sonar помечает System.out как 'Code smell' и просит заменить на логи
-        Спорно конечно уменьшать через отдельный метод, но в целом не кажется что метод усложняет чтение кода
-     */
-    private static void writeMessage(String message, Object... values) {
-        System.out.printf(message, values);
     }
 }

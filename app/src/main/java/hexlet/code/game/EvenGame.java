@@ -11,10 +11,6 @@ public final class EvenGame extends Game {
         super(RULE);
     }
 
-    /*
-      Вынес переменные в поля класса из-за падений тестов на проверку магических чисел:
-      - EVEN
-    */
     @Override
     protected String[] generateSingleGameData() {
         int randomNumber = getRandom(LOWER_BOUND, UPPER_BOUND);
