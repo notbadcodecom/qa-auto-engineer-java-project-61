@@ -1,6 +1,7 @@
 package hexlet.code.game;
 
 import java.util.random.RandomGenerator;
+import java.util.stream.IntStream;
 
 public abstract class Game {
 
@@ -16,21 +17,17 @@ public abstract class Game {
         this.rule = gameRule;
     }
 
-    public abstract GameDataNode generateGameDataNode();
-
     public final String getRule() {
         return rule;
     }
 
-    public final GameDataNode getGameDataLinkedList() {
-        GameDataNode head = generateGameDataNode();
-        GameDataNode current = head;
-        for (int i = 1; i < GAMES_COUNT && current != null; i++) {
-            current.setNext(generateGameDataNode());
-            current = current.getNext();
-        }
-        return head;
+    public String[][] generateMultipleGameData() {
+        return IntStream.range(0, GAMES_COUNT)
+                .mapToObj(i -> generateSingleGameData())
+                .toArray(String[][]::new);
     }
+
+    protected abstract String[] generateSingleGameData();
 
     public static int getRandom(int min, int max) {
         return RANDOM.nextInt(min, max);

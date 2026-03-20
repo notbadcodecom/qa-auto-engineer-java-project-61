@@ -18,20 +18,28 @@ public final class ProgressionGame extends Game {
         super(RULE);
     }
 
+    /*
+      Вынес переменные в поля класса из-за падений тестов на проверку магических чисел:
+      - MIN_INDEX_VALUE
+    */
     @Override
-    public GameDataNode generateGameDataNode() {
-        int firstElement = getRandom(LOWER_BOUND, FIRST_ELEMENT_BOUND);
-        int difference = getRandom(LOWER_BOUND, DIFFERENCE_BOUND);
+    protected String[] generateSingleGameData() {
         int numberOfTerms = getRandom(SEQUENCE_MIN_BOUND, SEQUENCE_MAX_BOUND);
-        List<Integer> sequence = IntStream.iterate(firstElement, elem -> elem + difference)
-                .limit(numberOfTerms)
-                .boxed()
-                .toList();
+        List<Integer> sequence = generateSequence(numberOfTerms);
         int answerIndex = getRandom(MIN_INDEX_VALUE, numberOfTerms);
-        Integer answer = sequence.get(answerIndex);
         String question = IntStream.range(MIN_INDEX_VALUE, sequence.size())
                 .mapToObj(index -> index == answerIndex ? ".." : sequence.get(index).toString())
                 .collect(Collectors.joining(" "));
-        return new GameDataNode(question, answer.toString());
+        String answer = sequence.get(answerIndex).toString();
+        return new String[]{question, answer};
+    }
+
+    public List<Integer> generateSequence(int numberOfTerms) {
+        int firstElement = getRandom(LOWER_BOUND, FIRST_ELEMENT_BOUND);
+        int difference = getRandom(LOWER_BOUND, DIFFERENCE_BOUND);
+        return IntStream.iterate(firstElement, elem -> elem + difference)
+                .limit(numberOfTerms)
+                .boxed()
+                .toList();
     }
 }

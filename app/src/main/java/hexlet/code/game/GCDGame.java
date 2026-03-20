@@ -12,11 +12,10 @@ public final class GCDGame extends Game {
     }
 
     @Override
-    public GameDataNode generateGameDataNode() {
+    protected String[] generateSingleGameData() {
         GCDNumber gcdNumber = generateGCDNumber();
         String question = String.format(QUESTION_PATTERN, gcdNumber.first(), gcdNumber.second());
-        String answer = Integer.toString(gcdNumber.gcd());
-        return new GameDataNode(question, answer);
+        return new String[]{question, Integer.toString(gcdNumber.gcd())};
     }
 
     private GCDNumber generateGCDNumber() {

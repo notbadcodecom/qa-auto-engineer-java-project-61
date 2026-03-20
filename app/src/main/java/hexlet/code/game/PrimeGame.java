@@ -15,13 +15,17 @@ public final class PrimeGame extends Game {
     }
 
     @Override
-    public GameDataNode generateGameDataNode() {
+    protected String[] generateSingleGameData() {
         int randomNumber = getRandom(LOWER_BOUND, MAX_PRIME_VALUE);
-        String question = String.valueOf(randomNumber);
         String answer = primeToAnswerMap.get(isPrime(randomNumber));
-        return new GameDataNode(question, answer);
+        return new String[]{Integer.toString(randomNumber), answer};
     }
 
+    /*
+      Вынес переменные в поля класса из-за падений тестов на проверку магических чисел:
+      - MIN_EVEN
+      - MIN_ODD
+    */
     private boolean isPrime(int number) {
         if (number < MIN_EVEN || number % MIN_EVEN == 0) {
             return false;

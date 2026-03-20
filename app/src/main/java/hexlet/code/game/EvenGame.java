@@ -12,11 +12,14 @@ public final class EvenGame extends Game {
         super(RULE);
     }
 
+    /*
+      Вынес переменные в поля класса из-за падений тестов на проверку магических чисел:
+      - EVEN
+    */
     @Override
-    public GameDataNode generateGameDataNode() {
+    protected String[] generateSingleGameData() {
         int randomNumber = getRandom(LOWER_BOUND, UPPER_BOUND);
-        String question = String.valueOf(randomNumber);
         String answer = isEvenToAnswerMap.get(randomNumber % EVEN == 0);
-        return new GameDataNode(question, answer);
+        return new String[]{Integer.toString(randomNumber), answer};
     }
 }

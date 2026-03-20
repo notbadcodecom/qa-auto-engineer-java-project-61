@@ -14,18 +14,27 @@ public final class CalcGame extends Game {
         super(RULE);
     }
 
+    /*
+        Вынес переменные в поля класса из-за падений тестов на проверку магических чисел:
+        - MIN_MATH_OPERATORS_INDEX
+        - MAX_MATH_OPERATORS_INDEX
+     */
     @Override
-    public GameDataNode generateGameDataNode() {
+    protected String[] generateSingleGameData() {
         int first = getRandom(LOWER_BOUND, UPPER_BOUND);
         int second = getRandom(LOWER_BOUND, UPPER_BOUND);
         String operator = MATH_OPERATORS.get(getRandom(MIN_MATH_OPERATORS_INDEX, MAX_MATH_OPERATORS_INDEX));
-        Integer answer = switch (operator) {
+        String question = String.format(MATH_EXPRESSION_PATTERN, first, operator, second);
+        return new String[]{question, getAnswer(first, second, operator)};
+    }
+
+    private String getAnswer(int first, int second, String operator) {
+        Integer result = switch (operator) {
             case "+" -> first + second;
             case "-" -> first - second;
             case "*" -> first * second;
             default -> throw new IllegalStateException("Unexpected value: " + operator);
         };
-        String question = String.format(MATH_EXPRESSION_PATTERN, first, operator, second);
-        return new GameDataNode(question, answer.toString());
+        return result.toString();
     }
 }
