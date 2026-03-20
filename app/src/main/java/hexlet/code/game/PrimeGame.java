@@ -20,11 +20,13 @@ public final class PrimeGame extends Game {
     }
 
     private boolean isPrime(int number) {
-        if (number < 2 || number % 2 == 0) {
+        int even = 2;
+        if (number < even || number % even == 0) {
             return false;
         }
         int sqrt = (int) Math.sqrt(number);
-        for (int i = 3; i <= sqrt; i += 2) {
+        int odd = 3;
+        for (int i = odd; i <= sqrt; i += even) {
             if (number % i == 0) {
                 return false;
             }
