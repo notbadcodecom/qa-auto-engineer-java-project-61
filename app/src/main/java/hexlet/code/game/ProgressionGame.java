@@ -12,22 +12,17 @@ public final class ProgressionGame extends Game {
     private static final int DIFFERENCE_BOUND = 9;
     private static final int SEQUENCE_MAX_BOUND = 10;
     private static final int SEQUENCE_MIN_BOUND = 5;
-    private static final int MIN_INDEX_VALUE = 0;
 
     public ProgressionGame() {
         super(RULE);
     }
 
-    /*
-      Вынес переменные в поля класса из-за падений тестов на проверку магических чисел:
-      - MIN_INDEX_VALUE
-    */
     @Override
     protected String[] generateSingleGameData() {
         int numberOfTerms = getRandom(SEQUENCE_MIN_BOUND, SEQUENCE_MAX_BOUND);
         List<Integer> sequence = generateSequence(numberOfTerms);
-        int answerIndex = getRandom(MIN_INDEX_VALUE, numberOfTerms);
-        String question = IntStream.range(MIN_INDEX_VALUE, sequence.size())
+        int answerIndex = getRandom(0, numberOfTerms);
+        String question = IntStream.range(0, sequence.size())
                 .mapToObj(index -> index == answerIndex ? ".." : sequence.get(index).toString())
                 .collect(Collectors.joining(" "));
         String answer = sequence.get(answerIndex).toString();

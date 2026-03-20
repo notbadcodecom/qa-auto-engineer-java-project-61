@@ -6,7 +6,6 @@ public final class EvenGame extends Game {
 
     private static final String RULE = "Answer 'yes' if the number is even, otherwise answer 'no'.";
     private final Map<Boolean, String> isEvenToAnswerMap = Map.of(true, "yes", false, "no");
-    private static final int EVEN = 2;
 
     public EvenGame() {
         super(RULE);
@@ -19,7 +18,7 @@ public final class EvenGame extends Game {
     @Override
     protected String[] generateSingleGameData() {
         int randomNumber = getRandom(LOWER_BOUND, UPPER_BOUND);
-        String answer = isEvenToAnswerMap.get(randomNumber % EVEN == 0);
+        String answer = isEvenToAnswerMap.get(randomNumber % 2 == 0);
         return new String[]{Integer.toString(randomNumber), answer};
     }
 }
