@@ -7,7 +7,7 @@ public final class GreetGame extends Game {
     }
 
     @Override
-    public GameDataNode generateGameDataNode() {
-        return null;
+    protected String[] generateSingleGameData() {
+        return new String[0];
     }
 }

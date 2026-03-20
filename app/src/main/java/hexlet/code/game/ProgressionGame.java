@@ -12,26 +12,29 @@ public final class ProgressionGame extends Game {
     private static final int DIFFERENCE_BOUND = 9;
     private static final int SEQUENCE_MAX_BOUND = 10;
     private static final int SEQUENCE_MIN_BOUND = 5;
-    private static final int MIN_INDEX_VALUE = 0;
 
     public ProgressionGame() {
         super(RULE);
     }
 
     @Override
-    public GameDataNode generateGameDataNode() {
+    protected String[] generateSingleGameData() {
+        int numberOfTerms = getRandom(SEQUENCE_MIN_BOUND, SEQUENCE_MAX_BOUND);
+        List<Integer> sequence = generateSequence(numberOfTerms);
+        int answerIndex = getRandom(0, numberOfTerms);
+        String question = IntStream.range(0, sequence.size())
+                .mapToObj(index -> index == answerIndex ? ".." : sequence.get(index).toString())
+                .collect(Collectors.joining(" "));
+        String answer = sequence.get(answerIndex).toString();
+        return new String[]{question, answer};
+    }
+
+    public List<Integer> generateSequence(int numberOfTerms) {
         int firstElement = getRandom(LOWER_BOUND, FIRST_ELEMENT_BOUND);
         int difference = getRandom(LOWER_BOUND, DIFFERENCE_BOUND);
-        int numberOfTerms = getRandom(SEQUENCE_MIN_BOUND, SEQUENCE_MAX_BOUND);
-        List<Integer> sequence = IntStream.iterate(firstElement, elem -> elem + difference)
+        return IntStream.iterate(firstElement, elem -> elem + difference)
                 .limit(numberOfTerms)
                 .boxed()
                 .toList();
-        int answerIndex = getRandom(MIN_INDEX_VALUE, numberOfTerms);
-        Integer answer = sequence.get(answerIndex);
-        String question = IntStream.range(MIN_INDEX_VALUE, sequence.size())
-                .mapToObj(index -> index == answerIndex ? ".." : sequence.get(index).toString())
-                .collect(Collectors.joining(" "));
-        return new GameDataNode(question, answer.toString());
     }
 }
