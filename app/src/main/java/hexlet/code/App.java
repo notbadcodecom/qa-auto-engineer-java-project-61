@@ -1,6 +1,5 @@
 package hexlet.code;
 
-import hexlet.code.engine.Engine;
 import hexlet.code.game.CalcGame;
 import hexlet.code.game.EvenGame;
 import hexlet.code.game.GCDGame;
@@ -29,7 +28,7 @@ public class App {
         }
         try {
             Game game = createGame(userChoice);
-            new Engine().runGame(game);
+            game.run();
         } catch (IllegalArgumentException e) {
             System.out.printf(e.getMessage());
         }

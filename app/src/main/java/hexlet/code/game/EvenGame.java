@@ -12,7 +12,7 @@ public final class EvenGame extends Game {
     }
 
     @Override
-    protected String[] generateSingleGameData() {
+    protected String[] generateGameData() {
         int randomNumber = getRandom(LOWER_BOUND, UPPER_BOUND);
         String answer = isEvenToAnswerMap.get(randomNumber % 2 == 0);
         return new String[]{Integer.toString(randomNumber), answer};

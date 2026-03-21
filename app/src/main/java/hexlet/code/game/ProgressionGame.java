@@ -18,23 +18,26 @@ public final class ProgressionGame extends Game {
     }
 
     @Override
-    protected String[] generateSingleGameData() {
-        int numberOfTerms = getRandom(SEQUENCE_MIN_BOUND, SEQUENCE_MAX_BOUND);
-        List<Integer> sequence = generateSequence(numberOfTerms);
-        int answerIndex = getRandom(0, numberOfTerms);
-        String question = IntStream.range(0, sequence.size())
-                .mapToObj(index -> index == answerIndex ? ".." : sequence.get(index).toString())
-                .collect(Collectors.joining(" "));
-        String answer = sequence.get(answerIndex).toString();
-        return new String[]{question, answer};
-    }
-
-    public List<Integer> generateSequence(int numberOfTerms) {
+    protected String[] generateGameData() {
         int firstElement = getRandom(LOWER_BOUND, FIRST_ELEMENT_BOUND);
         int difference = getRandom(LOWER_BOUND, DIFFERENCE_BOUND);
+        int numberOfTerms = getRandom(SEQUENCE_MIN_BOUND, SEQUENCE_MAX_BOUND);
+        List<String> sequence = generateSequence(firstElement, difference, numberOfTerms);
+        int answerIndex = getRandom(0, numberOfTerms);
+        String answer = sequence.get(answerIndex);
+        sequence.set(answerIndex, "..");
+        return new String[]{String.join(" ", sequence), answer};
+    }
+
+    public List<String> generateSequence(
+            int firstElement,
+            int difference,
+            int numberOfTerms
+    ) {
         return IntStream.iterate(firstElement, elem -> elem + difference)
                 .limit(numberOfTerms)
                 .boxed()
-                .toList();
+                .map(Object::toString)
+                .collect(Collectors.toList());
     }
 }
