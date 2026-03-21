@@ -1,10 +1,10 @@
 package hexlet.code.engine;
 
-import hexlet.code.game.Game;
-
 import java.util.Scanner;
 
 public final class Engine {
+
+    public static final int GAMES_COUNT = 3;
 
     private static final String WELCOME_MESSAGE = "Welcome to the Brain Games!";
     private static final String ASK_NAME_MESSAGE = "May I have your name? ";
@@ -17,19 +17,16 @@ public final class Engine {
     private static final String TRY_AGAIN_MESSAGE_PATTERN = "Let's try again, %s!%n";
     private static final String CONGRATULATION_MESSAGE_PATTERN = "Congratulations, %s!%n";
 
-    private final Scanner scanner;
+    private Scanner scanner;
 
-    public Engine() {
-        this.scanner = new Scanner(System.in);
-    }
-
-    public void runGame(Game game) {
+    public void run(String rule, String[][] gameData) {
+        scanner = new Scanner(System.in);
         String userName = getUserName();
-        String[][] gameData = game.generateMultipleGameData();
         if (gameData[0].length == 0) {
+            scanner.close();
             return;
         }
-        System.out.println(game.getRule());
+        System.out.println(rule);
         for (String[] data : gameData) {
             String question = String.format(QUESTION_MESSAGE_PATTEN, data[0]);
             String correctAnswer = data[1];
@@ -38,11 +35,13 @@ public final class Engine {
             if (!correctAnswer.equals(userAnswer)) {
                 System.out.printf(WRONG_ANSWER_MESSAGE_PATTERN, userAnswer, correctAnswer);
                 System.out.printf(TRY_AGAIN_MESSAGE_PATTERN, userName);
+                scanner.close();
                 return;
             }
             System.out.println(CORRECT_ANSWER_MESSAGE);
         }
         System.out.printf(CONGRATULATION_MESSAGE_PATTERN, userName);
+        scanner.close();
     }
 
     private String getUserName() {

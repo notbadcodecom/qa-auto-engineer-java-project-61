@@ -7,7 +7,7 @@ public final class GreetGame extends Game {
     }
 
     @Override
-    protected String[] generateSingleGameData() {
+    protected String[] generateGameData() {
         return new String[0];
     }
 }

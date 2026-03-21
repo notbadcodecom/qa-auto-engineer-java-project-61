@@ -18,9 +18,11 @@ public final class ProgressionGame extends Game {
     }
 
     @Override
-    protected String[] generateSingleGameData() {
+    protected String[] generateGameData() {
+        int firstElement = getRandom(LOWER_BOUND, FIRST_ELEMENT_BOUND);
+        int difference = getRandom(LOWER_BOUND, DIFFERENCE_BOUND);
         int numberOfTerms = getRandom(SEQUENCE_MIN_BOUND, SEQUENCE_MAX_BOUND);
-        List<Integer> sequence = generateSequence(numberOfTerms);
+        List<Integer> sequence = generateSequence(firstElement, difference, numberOfTerms);
         int answerIndex = getRandom(0, numberOfTerms);
         String question = IntStream.range(0, sequence.size())
                 .mapToObj(index -> index == answerIndex ? ".." : sequence.get(index).toString())
@@ -29,9 +31,11 @@ public final class ProgressionGame extends Game {
         return new String[]{question, answer};
     }
 
-    public List<Integer> generateSequence(int numberOfTerms) {
-        int firstElement = getRandom(LOWER_BOUND, FIRST_ELEMENT_BOUND);
-        int difference = getRandom(LOWER_BOUND, DIFFERENCE_BOUND);
+    public List<Integer> generateSequence(
+            int firstElement,
+            int difference,
+            int numberOfTerms
+    ) {
         return IntStream.iterate(firstElement, elem -> elem + difference)
                 .limit(numberOfTerms)
                 .boxed()

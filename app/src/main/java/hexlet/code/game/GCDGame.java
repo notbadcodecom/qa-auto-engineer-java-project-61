@@ -4,28 +4,29 @@ public final class GCDGame extends Game {
 
     private static final String RULE = "Find the greatest common divisor of given numbers.";
     private static final String QUESTION_PATTERN = "%d %d";
-    private static final int REDUCED_RANDOM_NUMBER_BOUND = 4; // small for test
-    private static final int UPPER_GDC_BOUND = 7; // small for tests
+    private static final int UPPER_BOUND = 7; // small for test
 
     public GCDGame() {
         super(RULE);
     }
 
     @Override
-    protected String[] generateSingleGameData() {
-        GCDNumber gcdNumber = generateGCDNumber();
-        String question = String.format(QUESTION_PATTERN, gcdNumber.first(), gcdNumber.second());
-        return new String[]{question, Integer.toString(gcdNumber.gcd())};
+    protected String[] generateGameData() {
+        GCDNumber gcd = generateGCDNumber(
+                getRandom(LOWER_BOUND, UPPER_BOUND),
+                getRandom(LOWER_BOUND, UPPER_BOUND)
+        );
+        String question = String.format(QUESTION_PATTERN, gcd.first(), gcd.second());
+        return new String[]{question, Integer.toString(gcd.gcd())};
     }
 
-    private GCDNumber generateGCDNumber() {
-        int first = getRandom(LOWER_BOUND, REDUCED_RANDOM_NUMBER_BOUND);
-        int second = getRandom(LOWER_BOUND, REDUCED_RANDOM_NUMBER_BOUND);
-        while (first == second) {
-            second = getRandom(LOWER_BOUND, REDUCED_RANDOM_NUMBER_BOUND);
+    private GCDNumber generateGCDNumber(int firstMultiplier, int secondMultiplier) {
+        int gcd = getRandom(LOWER_BOUND, UPPER_BOUND);
+        if (firstMultiplier == secondMultiplier) {
+            gcd = firstMultiplier;
+            return new GCDNumber(gcd, firstMultiplier, secondMultiplier);
         }
-        int gcd = getRandom(LOWER_BOUND, UPPER_GDC_BOUND);
-        return new GCDNumber(gcd, gcd * first, gcd *  second);
+        return new GCDNumber(gcd, gcd * firstMultiplier, gcd *  secondMultiplier);
     }
 
     private record GCDNumber(

@@ -13,7 +13,7 @@ public final class CalcGame extends Game {
     }
 
     @Override
-    protected String[] generateSingleGameData() {
+    protected String[] generateGameData() {
         int first = getRandom(LOWER_BOUND, UPPER_BOUND);
         int second = getRandom(LOWER_BOUND, UPPER_BOUND);
         String operator = MATH_OPERATORS.get(getRandom(0, MATH_OPERATORS.size() - 1));
